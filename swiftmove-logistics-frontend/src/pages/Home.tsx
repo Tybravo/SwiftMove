@@ -1,11 +1,16 @@
 import { Link } from 'react-router-dom';
+import heroBackground from '../assets/hero-bg.jpg'; 
+
 
 export default function Home() {
   return (
     <div className="font-sans text-gray-800">
       {/* Hero */}
       <section
-        className="bg-[url('https://www.marineinsight.com/wp-content/uploads/2022/05/6-Major-Ports-in-Nigeria.png')] bg-cover bg-center h-screen flex items-center justify-center pt-20"
+         className="bg-cover bg-center h-screen flex items-center justify-center pt-20"
+        style={{
+            backgroundImage: `url(${heroBackground})`,
+        }}
         data-aos="fade-up"
         data-aos-delay="200"
       >
@@ -20,24 +25,24 @@ export default function Home() {
           <p className="mb-6 text-lg">
             Fast, efficient, and smart delivery management tailored for Nigeria.
           </p>
-          <div className="space-x-4">
+            <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0 justify-center items-center">
             <button
-              className="bg-green-600 text-white px-6 py-3 rounded hover:bg-green-700 transition-colors"
-              data-aos="fade-right"
-              data-aos-delay="400"
+                className="bg-green-600 text-white px-6 py-3 rounded hover:bg-green-700 transition-colors"
+                data-aos="fade-right"
+                data-aos-delay="400"
             >
-              Request Quote
+                Request Quote
             </button>
             <Link
-              to="/register"
-              className="border border-white text-white px-6 py-3 rounded hover:bg-white hover:text-black transition-colors"
-              data-aos="fade-left"
-              data-aos-delay="500"
+                to="/register"
+                className="border border-white text-white px-6 py-3 rounded hover:bg-white hover:text-black transition-colors"
+                data-aos="fade-left"
+                data-aos-delay="500"
             >
-              Get Started
+                Get Started
             </Link>
-          </div>
-        </div>
+            </div>
+                    </div>
       </section>
 
       {/* Services Overview */}
