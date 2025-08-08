@@ -1,88 +1,8 @@
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 
-// export default function Home() {
-const Home = () =>{
-  // State to track scroll direction
-  const [isScrolledDown, setIsScrolledDown] = useState(false);
-  let lastScrollY = 0;
-
-  // Initialize AOS and handle scroll for header
-  useEffect(() => {
-    AOS.init({
-      duration: 800,
-      once: true,
-      easing: 'ease-out',
-    });
-
-    // Scroll event listener for header animation
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      if (currentScrollY > lastScrollY && currentScrollY > 50) {
-        // Scrolling down
-        setIsScrolledDown(true);
-      } else if (currentScrollY < lastScrollY) {
-        // Scrolling up
-        setIsScrolledDown(false);
-      }
-      lastScrollY = currentScrollY;
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  
+export default function Home() {
   return (
     <div className="font-sans text-gray-800">
-      {/* Header */}
-      <header
-        className={`bg-white shadow-md fixed w-full z-50 transition-opacity duration-300 ${
-          isScrolledDown ? 'opacity-60' : 'opacity-100'
-        }`}
-        data-aos="fade-down"
-        data-aos-delay="100"
-      >
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-red-600">
-            Swift<span className="text-green-600">Move</span> Logistics
-          </h1>
-          <nav className="space-x-6 hidden md:flex">
-            <Link to="/" className="hover:text-red-600">
-              Home
-            </Link>
-            <a href="#about" className="hover:text-red-600">
-              About
-            </a>
-            <a href="#services" className="hover:text-red-600">
-              Services
-            </a>
-            <a href="#pricing" className="hover:text-red-600">
-              Pricing
-            </a>
-            <a href="#contact" className="hover:text-red-600">
-              Contact
-            </a>
-          </nav>
-          <div className="space-x-4">
-            <Link
-              to="/login"
-              className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors"
-            >
-              Login
-            </Link>
-            <Link
-              to="/register"
-              className="border border-red-600 text-red-600 px-4 py-2 rounded hover:bg-red-50 transition-colors"
-            >
-              Register
-            </Link>
-          </div>
-        </div>
-      </header>
-
       {/* Hero */}
       <section
         className="bg-[url('https://www.marineinsight.com/wp-content/uploads/2022/05/6-Major-Ports-in-Nigeria.png')] bg-cover bg-center h-screen flex items-center justify-center pt-20"
@@ -108,14 +28,14 @@ const Home = () =>{
             >
               Request Quote
             </button>
-            <a
-              href="#register"
+            <Link
+              to="/register"
               className="border border-white text-white px-6 py-3 rounded hover:bg-white hover:text-black transition-colors"
               data-aos="fade-left"
               data-aos-delay="500"
             >
               Get Started
-            </a>
+            </Link>
           </div>
         </div>
       </section>
@@ -235,7 +155,7 @@ const Home = () =>{
       </section>
 
       {/* Registration CTA */}
-      <section id="register" className="py-38 bg-red-50" data-aos="fade-up" data-aos-delay="100">
+      <section id="register" className="py-20 bg-red-50" data-aos="fade-up" data-aos-delay="100">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h3
             className="text-3xl font-bold mb-6"
@@ -277,13 +197,14 @@ const Home = () =>{
               data-aos-delay="400"
             />
           </form>
-          <button
+          <Link
+            to="/register"
             className="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700 transition-colors"
             data-aos="zoom-in"
             data-aos-delay="500"
           >
             Submit
-          </button>
+          </Link>
         </div>
       </section>
 
@@ -356,59 +277,6 @@ const Home = () =>{
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="bg-black text-white py-10" data-aos="fade-up" data-aos-delay="100">
-        <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div data-aos="fade-right" data-aos-delay="200">
-            <h4 className="font-bold text-lg mb-2">SwiftMove Logistics 🇳🇬</h4>
-            <p>Reliable logistics and smart delivery solutions across Nigeria.</p>
-            <div className="flex space-x-2 mt-2">
-              <a href="#">FB</a>
-              <a href="#">IG</a>
-              <a href="#">TW</a>
-            </div>
-          </div>
-          <div data-aos="fade-up" data-aos-delay="300">
-            <h4 className="font-bold mb-2">Quick Links</h4>
-            <ul className="space-y-1 text-sm">
-              <li>
-                <a href="#">Home</a>
-              </li>
-              <li>
-                <a href="#services">Services</a>
-              </li>
-              <li>
-                <a href="#pricing">Pricing</a>
-              </li>
-              <li>
-                <a href="#contact">Contact</a>
-              </li>
-            </ul>
-          </div>
-          <div data-aos="fade-up" data-aos-delay="400">
-            <h4 className="font-bold mb-2">Contact</h4>
-            <p>📞 +234 901 234 5678</p>
-            <p>📍 Lagos, Nigeria</p>
-          </div>
-          <div data-aos="fade-left" data-aos-delay="500">
-            <h4 className="font-bold mb-2">Newsletter</h4>
-            <input
-              type="email"
-              placeholder="Your email"
-              className="px-3 py-2 w-full text-black rounded"
-            />
-            <button className="mt-2 bg-green-600 px-4 py-2 rounded w-full hover:bg-green-700 transition-colors">
-              Subscribe
-            </button>
-          </div>
-        </div>
-        <p className="text-center text-sm mt-6" data-aos="fade-up" data-aos-delay="600">
-          © 2025 SwiftMove Logistics. All rights reserved.
-        </p>
-      </footer>
     </div>
   );
 }
-
-export default Home;
