@@ -1,23 +1,23 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import mongoose from 'mongoose';
+import { Server } from 'socket.io';
+import http from 'http';
+import app from './app';
+import { connectDB } from './config/db';
+import { setupSockets } from './sockets/deliverySocket';
+import { env } from './config/env';
 
-dotenv.config();
-
-const app = express();
-const PORT = process.env.PORT || 5000;
-
-app.use(express.json());
-
-mongoose.connect(process.env.MONGO_URI as string)
-  .then(() => console.log('Connected to MongoDB'))
-  .catch((err) => console.error('MongoDB connection error:', err));
-
-app.get('/', (req, res) => {
-  res.send('SwiftMove Logistics Backend');
+const server = http.createServer(app);
+export const io = new Server(server, {
+  cors: {
+    origin: 'http://localhost:5173', // Frontend URL
+    methods: ['GET', 'POST', 'PUT'],
+  },
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+connectDB();
+
+setupSockets(io);
+
+server.listen(env.PORT, () => {
+  console.log(`Server running on port ${env.PORT}`);
 });
 
