@@ -1,22 +1,25 @@
 import express from 'express';
-// import authRoutes from './routes/authRoutes';
-// import deliveryRoutes from './routes/deliveryRoutes';
-// import driverRoutes from './routes/driverRoutes';
-// import { errorMiddleware } from './middleware/errorMiddleware';
+import authRoutes from './routes/authRoutes';
+import { errorMiddleware } from './middleware/errorMiddleware';
+import { authMiddleware } from './middleware/authMiddleware';
+import deliveryRoutes from './routes/deliveryRoutes';
+import driverRoutes from './routes/driverRoutes';
 
 const app = express();
 
 app.use(express.json());
 
-// Temporary root route for testing
-app.get('/', (req, res) => {
-  res.send('SwiftMove Logistics Backend');
-});
 
-// app.use('/api/auth', authRoutes);
-// app.use('/api/deliveries', deliveryRoutes);
-// app.use('/api/drivers', driverRoutes);
+// Public routes
+app.use('/api/auth', authRoutes);
 
-// app.use(errorMiddleware);
+// Protected routes
+app.use(authMiddleware);
+app.use('/api/deliveries', authMiddleware, deliveryRoutes);
+app.use('/api/drivers', authMiddleware, driverRoutes);
+
+// Error handling
+app.use(errorMiddleware);
+
 
 export default app;
