@@ -1,7 +1,11 @@
-// import React from 'react';
+import { useEffect } from 'react';
 import StatusBadge from '../components/common/StatusBadge';
 
 const AdminDashboard = () => {
+  useEffect(() => {
+    document.title = 'SwiftMove - Admin Dashboard'; // Set the tab title
+  }, []); // Empty dependency array ensures it runs once on mount
+
   return (
     <div>
       <div className="grid grid-cols-2 gap-4">
