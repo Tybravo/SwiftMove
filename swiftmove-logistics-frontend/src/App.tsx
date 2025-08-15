@@ -7,18 +7,9 @@ import 'aos/dist/aos.css';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import Header from './components/layout/Header';
-import Footer from './components/layout/Footer';
-
-function Layout({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="flex flex-col min-h-screen font-sans text-gray-800">
-      <Header />
-      <main className="flex-grow">{children}</main>
-      <Footer />
-    </div>
-  );
-}
+import AdminDashboard from './pages/AdminDashboard';
+import PublicLayout from './components/public/Layout'; // Verify this path
+import AdminLayout from './layout/AdminLayout'; // Verify this path
 
 function App() {
   // Initialize AOS
@@ -44,9 +35,10 @@ function App() {
         pauseOnHover
       />
       <Routes>
-        <Route path="/" element={<Layout><Home /></Layout>} />
-        <Route path="/login" element={<Layout><Login /></Layout>} />
-        <Route path="/register" element={<Layout><Register /></Layout>} />
+        <Route path="/" element={<PublicLayout><Home /></PublicLayout>} />
+        <Route path="/login" element={<PublicLayout><Login /></PublicLayout>} />
+        <Route path="/register" element={<PublicLayout><Register /></PublicLayout>} />
+        <Route path="/admin/dashboard" element={<AdminLayout><AdminDashboard /></AdminLayout>} />
       </Routes>
     </Router>
   );

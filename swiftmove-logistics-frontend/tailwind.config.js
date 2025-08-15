@@ -7,7 +7,11 @@ export default {
     extend: {
       transitionProperty: {
       'position': 'top, left, right, bottom',
-    }
+    },
+    colors: {
+        swiftGreen: '#2E7D32',
+        swiftRed: '#D32F2F',
+      }
     },
   },
   plugins: [],
