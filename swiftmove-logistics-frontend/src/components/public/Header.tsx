@@ -2,7 +2,12 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Menu, X } from 'lucide-react';
 
-export default function Header() {
+interface HeaderProps {
+  showRegisterOnly?: boolean; // Existing prop
+  showLoginOnly?: boolean;   // Add this prop
+}
+
+export default function Header({ showRegisterOnly = false, showLoginOnly = false }: HeaderProps) {
   const [isScrolledDown, setIsScrolledDown] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -23,7 +28,7 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const toggleMobileMenu = () => setIsMobileMenuOpen(prev => !prev);
+  const toggleMobileMenu = () => setIsMobileMenuOpen((prev) => !prev);
 
   const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
@@ -38,7 +43,7 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between w-full">
         {/* Logo */}
         <h1 className="text-base sm:text-lg md:text-2xl font-bold text-red-600 whitespace-nowrap">
-          Swift<span className="text-green-600">Move</span>
+          Swift<span className="text-teal-600">Move</span>
         </h1>
 
         {/* Desktop Nav */}
@@ -52,8 +57,36 @@ export default function Header() {
 
         {/* Desktop Auth Buttons */}
         <div className="hidden md:flex items-center space-x-2 text-xs sm:text-sm">
-          <Link to="/login" className="bg-red-600 text-white px-3 py-2 rounded hover:bg-red-700 transition-colors">Login</Link>
-          <Link to="/register" className="border border-red-600 text-red-600 px-3 py-2 rounded hover:bg-red-50 transition-colors">Register</Link>
+          {showRegisterOnly ? (
+            <Link
+              to="/register"
+              className="border border-red-600 text-red-600 px-3 py-2 rounded hover:bg-red-50 transition-colors"
+            >
+              Register
+            </Link>
+          ) : showLoginOnly ? (
+            <Link
+              to="/login"
+              className="bg-red-600 text-white px-3 py-2 rounded hover:bg-red-700 transition-colors"
+            >
+              Login
+            </Link>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="bg-red-600 text-white px-3 py-2 rounded hover:bg-red-700 transition-colors"
+              >
+                Login
+              </Link>
+              <Link
+                to="/register"
+                className="border border-red-600 text-red-600 px-3 py-2 rounded hover:bg-red-50 transition-colors"
+              >
+                Register
+              </Link>
+            </>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
@@ -67,48 +100,68 @@ export default function Header() {
       </div>
 
       {/* Mobile Slide-In Menu */}
-<div
-  className={`fixed top-0 right-0 h-screen w-64 z-50 transform transition-transform duration-300 ease-in-out md:hidden ${
-    isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
-  } shadow-lg bg-gray-50 text-black flex flex-col overflow-y-auto`}
->
-  {/* Close Button */}
-  <div className="flex justify-end p-4">
-    <button onClick={toggleMobileMenu} aria-label="Close mobile menu">
-      <X size={24} className="text-red-600" />
-    </button>
-  </div>
-
-  {/* Menu Content */}
-  <div className="flex flex-col justify-between flex-grow px-6 pb-6">
-    {/* Navigation Links */}
-    <nav className="flex flex-col space-y-4 text-base">
-      <Link to="/" onClick={closeMobileMenu} className="hover:text-red-400">Home</Link>
-      <a href="#about" onClick={closeMobileMenu} className="hover:text-red-400">About</a>
-      <a href="#services" onClick={closeMobileMenu} className="hover:text-red-400">Services</a>
-      <a href="#pricing" onClick={closeMobileMenu} className="hover:text-red-400">Pricing</a>
-      <a href="#contact" onClick={closeMobileMenu} className="hover:text-red-400">Contact</a>
-    </nav>
-
-    {/* Auth Buttons */}
-    <div className="flex flex-col space-y-2 pt-6">
-      <Link
-        to="/login"
-        onClick={closeMobileMenu}
-        className="bg-red-600 text-white px-4 py-2 rounded text-center hover:bg-red-700 transition-colors"
+      <div
+        className={`fixed top-0 right-0 h-screen w-64 z-50 transform transition-transform duration-300 ease-in-out md:hidden ${
+          isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        } shadow-lg bg-gray-50 text-black flex flex-col overflow-y-auto`}
       >
-        Login
-      </Link>
-      <Link
-        to="/register"
-        onClick={closeMobileMenu}
-        className="border border-red-600 text-red-600 bg-white px-4 py-2 rounded text-center hover:bg-red-100 transition-colors"
-      >
-        Register
-      </Link>
-    </div>
-  </div>
-</div>
+        {/* Close Button */}
+        <div className="flex justify-end p-4">
+          <button onClick={toggleMobileMenu} aria-label="Close mobile menu">
+            <X size={24} className="text-red-600" />
+          </button>
+        </div>
+
+        {/* Menu Content */}
+        <div className="flex flex-col justify-between flex-grow px-6 pb-6">
+          {/* Navigation Links */}
+          <nav className="flex flex-col space-y-4 text-base">
+            <Link to="/" onClick={closeMobileMenu} className="hover:text-red-400">Home</Link>
+            <a href="#about" onClick={closeMobileMenu} className="hover:text-red-400">About</a>
+            <a href="#services" onClick={closeMobileMenu} className="hover:text-red-400">Services</a>
+            <a href="#pricing" onClick={closeMobileMenu} className="hover:text-red-400">Pricing</a>
+            <a href="#contact" onClick={closeMobileMenu} className="hover:text-red-400">Contact</a>
+          </nav>
+
+          {/* Auth Buttons */}
+          <div className="flex flex-col space-y-2 pt-6">
+            {showRegisterOnly ? (
+              <Link
+                to="/register"
+                onClick={closeMobileMenu}
+                className="border border-red-600 text-red-600 bg-white px-4 py-2 rounded text-center hover:bg-red-100 transition-colors"
+              >
+                Register
+              </Link>
+            ) : showLoginOnly ? (
+              <Link
+                to="/login"
+                onClick={closeMobileMenu}
+                className="bg-red-600 text-white px-4 py-2 rounded text-center hover:bg-red-700 transition-colors"
+              >
+                Login
+              </Link>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  onClick={closeMobileMenu}
+                  className="bg-red-600 text-white px-4 py-2 rounded text-center hover:bg-red-700 transition-colors"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/register"
+                  onClick={closeMobileMenu}
+                  className="border border-red-600 text-red-600 bg-white px-4 py-2 rounded text-center hover:bg-red-100 transition-colors"
+                >
+                  Register
+                </Link>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
 
       {/* Overlay when mobile menu is open */}
       {isMobileMenuOpen && (

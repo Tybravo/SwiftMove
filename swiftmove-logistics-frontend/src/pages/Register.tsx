@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import type { SubmitHandler } from 'react-hook-form';
+import { useForm, type SubmitHandler } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import AOS from 'aos';
@@ -17,6 +16,10 @@ interface FormData {
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState(0);
+
+  useEffect(() => {
+    document.title = 'SwiftMove - Register'; // Set the tab title
+  }, []);
 
   useEffect(() => {
     AOS.init({ once: true });
@@ -78,11 +81,11 @@ export default function Register() {
     <section className="min-h-screen bg-red-50 py-20 flex items-center justify-center">
       <div className="w-full px-4 text-center -mt-10" data-aos="fade-up" data-aos-delay="100">
         <h2
-          className="text-3xl font-bold mb-6 text-gray-800"
+          className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 text-gray-800"
           data-aos="fade-down"
           data-aos-delay="200"
         >
-          Register now to start managing your logistics operations in real time
+          Register here now
         </h2>
 
         <form
