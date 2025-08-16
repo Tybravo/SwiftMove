@@ -4,6 +4,7 @@ export interface IUser {
   password: string;
   role: 'admin' | 'user';
   registeredAt: string; 
+  businessCategory: string;
 }
 
 export interface LoginRequest {
@@ -15,4 +16,5 @@ export interface RegisterRequest {
   email: string;
   password: string;
   role?: 'admin' | 'user';
+  businessCategory: string;
 }
