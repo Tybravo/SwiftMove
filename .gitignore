@@ -1,0 +1,3 @@
+#Prevent this folder from been added to dev-backend branch
+#swiftmove-logistics-backend/
+#swiftmove-logistics-frontend/
