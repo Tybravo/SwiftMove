@@ -16,7 +16,7 @@ const Sidebar = ({ isCollapsed }: SidebarProps) => {
   ];
 
   return (
-    <aside className={`bg-swiftGreen text-white h-screen p-4 transition-all duration-300 ${isCollapsed ? 'w-22' : 'w-42'}`}>
+    <aside className={`bg-swiftGreen text-white h-screen p-4 transition-all duration-300 ${isCollapsed ? 'w-15' : 'w-42'}`}>
       <ul className="space-y-2">
         {menuItems.map((item) => (
           <li key={item.path}>
@@ -24,7 +24,7 @@ const Sidebar = ({ isCollapsed }: SidebarProps) => {
               to={item.path}
               className={`flex items-center p-2 hover:bg-swiftRed rounded ${isCollapsed ? 'justify-center' : 'justify-start'}`}
             >
-              <item.icon className="text-white text-lg mr-3" />
+              <item.icon className="text-white text-lg mr-0" />
               {!isCollapsed && <span className="text-white">{item.text}</span>}
             </Link>
           </li>

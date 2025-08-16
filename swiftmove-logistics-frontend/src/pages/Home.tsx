@@ -1,8 +1,14 @@
 import { Link } from 'react-router-dom';
 import heroBackground from '../assets/hero-bg.jpg'; 
+import { useEffect } from 'react';
 
 
 export default function Home() {
+
+    useEffect(() => {
+      document.title = 'SwiftMove - Home'; // Set the tab title
+    }, []); // Empty dependency array ensures it runs once on mount
+  
   return (
     <div className="font-sans text-gray-800">
       {/* Hero */}
