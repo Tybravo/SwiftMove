@@ -58,7 +58,7 @@ export default function Register() {
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/register', {
+      await axios.post('http://localhost:5000/api/auth/register', {
         name: data.name,
         email: data.email,
         password: data.password,
