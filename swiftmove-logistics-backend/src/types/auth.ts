@@ -1,5 +1,6 @@
 export interface IUser {
   _id?: string;
+  name: string;
   email: string;
   password: string;
   role: 'admin' | 'user';
@@ -13,6 +14,7 @@ export interface LoginRequest {
 }
 
 export interface RegisterRequest {
+  name: string;
   email: string;
   password: string;
   role?: 'admin' | 'user';
