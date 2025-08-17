@@ -8,7 +8,7 @@ import 'aos/dist/aos.css';
 interface FormData {
   name: string;
   email: string;
-  businessType: string;
+  businessCategory: string;
   password: string;
   confirmPassword: string;
 }
@@ -120,17 +120,18 @@ export default function Register() {
 
           {/* Business Type */}
           <div className="text-left">
-            {errors.businessType && (
-              <p className="text-red-600 text-sm mb-1">{errors.businessType.message}</p>
+            {errors.businessCategory && (
+              <p className="text-red-600 text-sm mb-1">{errors.businessCategory.message}</p>
             )}
             <select
-              {...register('businessType', {
+              {...register('businessCategory', {
                 required: 'Business type is required',
                 validate: (v) => v !== '' || 'Please select a business type',
               })}
               className="border px-4 py-2 rounded w-full border-green-300"
             >
               <option value="">Business Type</option>
+              <option value="Individual">Individual</option>
               <option value="Retail">Retail</option>
               <option value="Wholesale">Wholesale</option>
               <option value="Courier">Courier</option>
