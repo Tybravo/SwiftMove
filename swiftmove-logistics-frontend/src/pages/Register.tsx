@@ -3,7 +3,8 @@ import { useForm, type SubmitHandler } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import AOS from 'aos';
-import 'aos/dist/aos.css';
+import 'aos/dist/aos.css'; // Import AOS CSS
+import axios from 'axios';
 
 interface FormData {
   name: string;
@@ -57,21 +58,18 @@ export default function Register() {
     }
 
     try {
-      const response = await fetch('/api/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
+      const response = await axios.post('http://localhost:5000/api/auth/register', {
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        businessCategory: data.businessCategory,
+        role: 'user', // Hardcoded as per the provided endpoint payload
       });
 
-      if (!response.ok) throw new Error('Error');
-
-      await response.json();
       toast.success('Registration successful! We will contact you soon.');
       reset();
-    } catch (error) {
-      toast.error('Something went wrong. Please try again later.');
+    } catch (error: any) {
+      toast.error(error.response?.data?.error || 'Something went wrong. Please try again later.');
     }
   };
 
@@ -140,9 +138,7 @@ export default function Register() {
 
           {/* Password */}
           <div className="text-left relative">
-            {errors.password && (
-              <p className="text-red-600 text-sm mb-1">{errors.password.message}</p>
-            )}
+            {errors.password && <p className="text-red-600 text-sm mb-1">{errors.password.message}</p>}
             <input
               type={showPassword ? 'text' : 'password'}
               {...register('password', {
@@ -152,7 +148,6 @@ export default function Register() {
               placeholder="Password"
               className="border px-4 py-2 rounded w-full border-green-300"
             />
-            {/* Toggle */}
             <span
               className="absolute right-3 top-1/2 transform -translate-y-1/2 text-sm text-blue-500 cursor-pointer"
               onClick={() => setShowPassword((prev) => !prev)}
@@ -160,7 +155,6 @@ export default function Register() {
               {showPassword ? 'Hide' : 'Show'}
             </span>
 
-            {/* Strength bar */}
             <div className="h-2 bg-gray-200 rounded mt-2">
               <div
                 className={`h-full ${strengthColor[passwordStrength - 1] || ''} rounded transition-all duration-300`}
