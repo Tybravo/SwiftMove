@@ -5,9 +5,9 @@ import User from '../models/User';
 import { RegisterRequest, LoginRequest, IUser } from '../types/auth';
 
 export const register = async (req: Request, res: Response) => {
-  const { email, password, businessCategory }: RegisterRequest = req.body;
+  const { name, email, password, businessCategory }: RegisterRequest = req.body;
 
-  if (!email || !password || !businessCategory) {
+  if (!name || !email || !password || !businessCategory) {
     return res
       .status(400)
       .json({ error: 'Email, password and business category are required' });
@@ -21,13 +21,14 @@ export const register = async (req: Request, res: Response) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({
+      name,
       email,
       password: hashedPassword,
       businessCategory,
     });
     await user.save();
 
-    res.status(201).json({ message: 'User registered successfully', user: { email: user.email, role: user.role, businessCategory: user.businessCategory,registeredAt: user.registeredAt } });
+    res.status(201).json({ message: 'User registered successfully', user: { name: user.name, email: user.email, role: user.role, businessCategory: user.businessCategory,registeredAt: user.registeredAt } });
   } catch (error) {
     console.error('Registration error:', error); // Log the full error details
     res.status(500).json({ error: 'Registration failed' });
