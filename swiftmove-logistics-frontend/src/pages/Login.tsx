@@ -1,9 +1,10 @@
-import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
+import { useForm, type SubmitHandler } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import axios from 'axios';
 
 interface FormData {
   email: string;
@@ -17,6 +18,7 @@ interface LoginResponse {
 
 export default function Login() {
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     document.title = 'SwiftMove - Login';
@@ -32,24 +34,20 @@ export default function Login() {
     formState: { errors, isSubmitting },
   } = useForm<FormData>();
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
-      const response = await fetch('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+      const response = await axios.post<LoginResponse>('http://localhost:5000/api/auth/login', {
+        email: data.email,
+        password: data.password,
       });
 
-      if (!response.ok) throw new Error('Login failed');
-
-      const userLevel: LoginResponse = await response.json();
       toast.success('Login successful!');
 
       // Save token
-      localStorage.setItem('token', userLevel.token);
+      localStorage.setItem('token', response.data.token);
 
       // Redirect based on role
-      switch (userLevel.role) {
+      switch (response.data.role) {
         case 'admin':
           navigate('/admin/dashboard');
           break;
@@ -57,10 +55,10 @@ export default function Login() {
           navigate('/driver/home');
           break;
         default:
-          navigate('/dashboard');
+          navigate('/user/dashboard');
       }
-    } catch (err) {
-      toast.error('Invalid credentials. Please try again.');
+    } catch (error: any) {
+      toast.error(error.response?.data?.error || 'Invalid credentials. Please try again.');
     }
   };
 
@@ -104,11 +102,20 @@ export default function Login() {
           <div className="text-left">
             {errors.password && <p className="text-red-600 text-sm">{errors.password.message}</p>}
             <input
+             type={showPassword ? 'text' : 'password'}
               {...register('password', { required: 'Password is required' })}
-              type="password"
+              //type="password"
+             
               placeholder="Password"
               className="border px-4 py-2 rounded w-full border-teal-300"
             />
+            <span
+              className="absolute right-3 top-1/1 transform translate-y-5 -translate-x-7 text-sm text-blue-500 cursor-pointer"
+              onClick={() => setShowPassword((prev) => !prev)}
+            >
+              {showPassword ? 'Hide' : 'Show'}
+            </span>
+
             <div className="mt-1 text-right">
               <Link to="/forgot-password" className="text-sm text-blue-600 hover:underline">
                 Forgot Password?
@@ -131,3 +138,4 @@ export default function Login() {
     </section>
   );
 }
+

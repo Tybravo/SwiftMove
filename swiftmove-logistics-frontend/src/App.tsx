@@ -8,8 +8,10 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import AdminDashboard from './pages/AdminDashboard';
+import UserDashboard from './pages/UserDashboard';
 import PublicLayout from './components/public/Layout'; // Verify this path
 import AdminLayout from './layout/AdminLayout'; // Verify this path
+import UserLayout from './layout/UserLayout'; // Verify this path
 
 function App() {
   // Initialize AOS
@@ -38,6 +40,7 @@ function App() {
         <Route path="/" element={<PublicLayout><Home /></PublicLayout>} />
         <Route path="/login" element={<PublicLayout><Login /></PublicLayout>} />
         <Route path="/register" element={<PublicLayout><Register /></PublicLayout>} />
+        <Route path="/user/dashboard" element={<UserLayout><UserDashboard /></UserLayout>} />
         <Route path="/admin/dashboard" element={<AdminLayout><AdminDashboard /></AdminLayout>} />
       </Routes>
     </Router>
