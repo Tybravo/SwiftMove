@@ -1,4 +1,3 @@
-# Logs
 logs
 *.log
 npm-debug.log*
@@ -12,8 +11,12 @@ dist
 dist-ssr
 *.local
 
-#Prevent this folder from been added to dev-frontend branch
-swiftmove-logistics-backend/
+#Environment Variables and Other Dependencies
+node_modules/*
+.env
+
+#Prevent this folder from been added to dev-backend branch
+swiftmove-logistics-frontend/
 
 # Editor directories and files
 .vscode/*
