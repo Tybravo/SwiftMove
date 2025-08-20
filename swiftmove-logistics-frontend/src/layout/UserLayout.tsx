@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import Navbar from '../components/common/NavbarAdmin';
-import Sidebar from '../components/common/SidebarAdmin';
+import Navbar from '../components/common/NavbarUser';
+import Sidebar from '../components/common/SidebarUser';
 import React from 'react';
 
-const AdminLayout = ({ children }: { children: React.ReactNode }) => {
+const UserLayout = ({ children }: { children: React.ReactNode }) => {
   // 1. Add state to manage the sidebar's collapsed status
   const [isCollapsed, setIsCollapsed] = useState(false);
 
@@ -26,6 +26,6 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
 };
 
   
-export default AdminLayout;
+export default UserLayout;
 
 
