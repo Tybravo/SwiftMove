@@ -1,12 +1,11 @@
-// import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaTachometerAlt, FaTruck, FaClipboardCheck, FaUsers, FaEnvelope, FaCog } from 'react-icons/fa'; // Import relevant icons
+import { FaTachometerAlt, FaTruck, FaClipboardCheck, FaUsers, FaEnvelope, FaCog, FaSignOutAlt } from 'react-icons/fa'; // Added FaSignOutAlt for logout icon
 
 interface SidebarProps {
   isCollapsed: boolean;
 }
 
-const Sidebar = ({ isCollapsed }: SidebarProps) => {
+const SidebarAdmin = ({ isCollapsed }: SidebarProps) => {
   const menuItems = [
     { path: '/admin/dashboard', icon: FaTachometerAlt, text: 'Dashboard' },
     { path: '/admin/deliveries', icon: FaTruck, text: 'All Deliveries' },
@@ -30,9 +29,19 @@ const Sidebar = ({ isCollapsed }: SidebarProps) => {
             </Link>
           </li>
         ))}
+        {/* Logout Button */}
+        <li>
+          <Link
+            to="/logout"
+            className={`flex items-center p-2 hover:bg-swiftRed rounded ${isCollapsed ? 'justify-center' : 'justify-start'}`}
+          >
+            <FaSignOutAlt className="text-white text-lg mr-2" />
+            {!isCollapsed && <span className="text-white">Logout</span>}
+          </Link>
+        </li>
       </ul>
     </aside>
   );
 };
 
-export default Sidebar;
+export default SidebarAdmin;
