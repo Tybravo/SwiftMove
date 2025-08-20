@@ -1,18 +1,17 @@
-// import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaTachometerAlt, FaTruck, FaUsers, FaEnvelope, FaRoute } from 'react-icons/fa'; // Import relevant icons
+import { FaTachometerAlt, FaTruck, FaUsers, FaEnvelope, FaRoute, FaSignOutAlt } from 'react-icons/fa'; // Added FaSignOutAlt for logout icon
 
 interface SidebarProps {
   isCollapsed: boolean;
 }
 
-const Sidebar = ({ isCollapsed }: SidebarProps) => {
+const SidebarUser = ({ isCollapsed }: SidebarProps) => {
   const menuItems = [
-    { path: '/admin/dashboard', icon: FaTachometerAlt, text: 'Dashboard' },
-    { path: '/admin/deliveries', icon: FaTruck, text: 'My Deliveries' },
-    { path: '/admin/drivers', icon: FaUsers, text: 'Free Drivers' },
-    { path: '/admin/messages', icon: FaEnvelope, text: 'Messages' },
-    { path: '/admin/tracking', icon: FaRoute, text: 'Tracking' },
+    { path: '/user/dashboard', icon: FaTachometerAlt, text: 'Dashboard' },
+    { path: '/user/deliveries', icon: FaTruck, text: 'My Deliveries' },
+    { path: '/user/drivers', icon: FaUsers, text: 'Free Drivers' },
+    { path: '/user/messages', icon: FaEnvelope, text: 'Messages' },
+    { path: '/user/tracking', icon: FaRoute, text: 'Tracking' },
   ];
 
   return (
@@ -29,9 +28,19 @@ const Sidebar = ({ isCollapsed }: SidebarProps) => {
             </Link>
           </li>
         ))}
+        {/* Logout Button */}
+        <li>
+          <Link
+            to="/logout"
+            className={`flex items-center p-2 hover:bg-swiftRed rounded ${isCollapsed ? 'justify-center' : 'justify-start'}`}
+          >
+            <FaSignOutAlt className="text-white text-lg mr-2" />
+            {!isCollapsed && <span className="text-white">Logout</span>}
+          </Link>
+        </li>
       </ul>
     </aside>
   );
 };
 
-export default Sidebar;
+export default SidebarUser;
