@@ -12,6 +12,12 @@ dist
 dist-ssr
 *.local
 
+#Prevent this folder from been added to dev-frontend branch
+swiftmove-logistics-backend/
+
+# vite cache
+.vite/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
