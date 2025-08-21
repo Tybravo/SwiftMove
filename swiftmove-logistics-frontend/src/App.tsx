@@ -6,7 +6,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import Home from './pages/Home';
 import Login from './pages/Login';
-import Logout from './pages/logout';
+import Logout from './pages/Logout';
 import Register from './pages/Register';
 import AdminDashboard from './pages/AdminDashboard';
 import UserDashboard from './pages/UserDashboard';
