@@ -19,7 +19,7 @@ export default function Register() {
   const [passwordStrength, setPasswordStrength] = useState(0);
 
   useEffect(() => {
-    document.title = 'SwiftMove - Register'; // Set the tab title
+    document.title = 'Register - SwiftMove'; // Set the tab title
   }, []);
 
   useEffect(() => {

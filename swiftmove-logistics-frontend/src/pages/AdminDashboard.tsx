@@ -3,7 +3,7 @@ import StatusBadge from '../components/common/StatusBadge';
 
 const AdminDashboard = () => {
   useEffect(() => {
-    document.title = 'SwiftMove - Admin Dashboard'; // Set the tab title
+    document.title = 'Admin Dashboard - SwiftMove'; // Set the tab title
   }, []); // Empty dependency array ensures it runs once on mount
 
   return (

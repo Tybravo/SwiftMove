@@ -8,7 +8,7 @@ interface NavbarProps {
 
 const Navbar = ({ onToggleSidebar, isCollapsed }: NavbarProps) => {
   return (
-    <nav className="bg-swiftGreen text-white p-4 flex justify-between items-center">
+    <nav className="bg-armyGreen text-white p-4 flex justify-between items-center">
   <div className="flex items-center w-full">
     {onToggleSidebar && (
       <button
