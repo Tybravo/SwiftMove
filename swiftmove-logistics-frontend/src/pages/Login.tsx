@@ -21,7 +21,7 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
-    document.title = 'SwiftMove - Login';
+    document.title = 'Login - SwiftMove';
   }, []);
 
   useEffect(() => {

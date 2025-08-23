@@ -11,6 +11,10 @@ export default {
     colors: {
         swiftGreen: '#2E7D32',
         swiftRed: '#D32F2F',
+        armyGreen: '#4B5320',
+        tealGreen: '#00827F',
+        hunterGreen: '#355E3B',
+        viridianGreen: '#009698',
       }
     },
   },

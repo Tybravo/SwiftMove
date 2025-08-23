@@ -15,7 +15,7 @@ const SidebarUser = ({ isCollapsed }: SidebarProps) => {
   ];
 
   return (
-    <aside className={`bg-swiftGreen text-white h-screen p-4 transition-all duration-300 ${isCollapsed ? 'w-15' : 'w-42'}`}>
+    <aside className={`bg-tealGreen text-white h-screen p-4 transition-all duration-300 ${isCollapsed ? 'w-15' : 'w-42'}`}>
       <ul className="space-y-2">
         {menuItems.map((item) => (
           <li key={item.path}>
