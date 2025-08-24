@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import AOS from 'aos';
-import 'aos/dist/aos.css'; // Import AOS CSS
+import 'aos/dist/aos.css';
 import axios from 'axios';
 
 interface FormData {
@@ -14,12 +14,25 @@ interface FormData {
   confirmPassword: string;
 }
 
+interface RegisterResponse {
+  message: string;
+  user: {
+    name: string;
+    email: string;
+    role: string;
+    businessCategory: string;
+    registeredAt: string;
+  };
+}
+
 export default function Register() {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState(0);
 
   useEffect(() => {
-    document.title = 'Register - SwiftMove'; // Set the tab title
+    document.title = 'Register - SwiftMove';
+    window.scrollTo(0, 0);
   }, []);
 
   useEffect(() => {
@@ -58,7 +71,7 @@ export default function Register() {
     }
 
     try {
-      await axios.post('http://localhost:5000/api/auth/register', {
+      await axios.post<RegisterResponse>('http://localhost:5000/api/auth/register', {
         name: data.name,
         email: data.email,
         password: data.password,
@@ -66,14 +79,17 @@ export default function Register() {
         role: 'user', // Hardcoded as per the provided endpoint payload
       });
 
-      toast.success('Registration successful! We will contact you soon.');
+      toast.success('Registration successful! Redirecting to login...');
       reset();
+      navigate('/login');
     } catch (error: any) {
       toast.error(error.response?.data?.error || 'Something went wrong. Please try again later.');
     }
   };
 
   const strengthColor = ['bg-red-500', 'bg-yellow-400', 'bg-yellow-500', 'bg-green-400', 'bg-green-600'];
+
+
 
   return (
     <section className="min-h-screen bg-red-50 py-20 flex items-center justify-center">

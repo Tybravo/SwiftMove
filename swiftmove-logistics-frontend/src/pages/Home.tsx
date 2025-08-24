@@ -1,14 +1,65 @@
 import { Link } from 'react-router-dom';
+import {useForm, type SubmitHandler} from "react-hook-form";
+import { toast } from 'react-toastify';
 import heroBackground from '../assets/hero-bg.jpg'; 
 import { useEffect } from 'react';
+import axios from 'axios';
+
+
+interface FormData {
+  name: string;
+  email: string;
+}
+
+interface QuoteResponse {
+  message: string;
+  user: {
+    name: string;
+    email: string;
+    registeredAt: string;
+  };
+}
 
 
 export default function Home() {
+  const {
+    register: quote,
+    handleSubmit,
+    reset,
+    formState,
+  } = useForm<FormData>();
 
-    useEffect(() => {
-      document.title = 'Home - SwiftMove'; // Set the tab title
-    }, []); // Empty dependency array ensures it runs once on mount
+  useEffect(() => {
+    document.title = 'Home - SwiftMove'; // Set the tab title
+  }, []); // Empty dependency array ensures it runs once on mount
+
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      const element = document.querySelector(hash);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, []);
+
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    try {
+      console.log('Quote form submitted:', data);
+      await axios.post<QuoteResponse>('http://localhost:5000/api/auth/quote', {
+        name: data.name,
+        email: data.email,
+      });
+
+      toast.success('Your quote request has been submitted successfully!');
+      reset();
+    } catch (error: any) {
+      toast.error(error.response?.data?.error || 'Something went wrong. Please try again later.');
+    }
+  };
+
   
+
   return (
     <div className="font-sans text-gray-800">
       {/* Hero */}
@@ -32,13 +83,14 @@ export default function Home() {
             Fast, efficient, and smart delivery management tailored for Nigeria.
           </p>
             <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0 justify-center items-center">
-            <button
-                className="bg-green-600 text-white px-6 py-3 rounded hover:bg-green-700 transition-colors"
-                data-aos="fade-right"
-                data-aos-delay="400"
+            <a
+              href="#quote"
+              className="bg-green-600 text-white px-6 py-3 rounded hover:bg-green-700 transition-colors"
+              data-aos="fade-right"
+              data-aos-delay="400"
             >
-                Request Quote
-            </button>
+              Request Quote
+            </a>
             <Link
                 to="/register"
                 className="border border-white text-white px-6 py-3 rounded hover:bg-white hover:text-black transition-colors"
@@ -165,59 +217,68 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Registration CTA */}
-      <section id="register" className="py-20 bg-red-50" data-aos="fade-up" data-aos-delay="100">
+
+      {/* Quote CTA */}
+      <section id="quote" className="py-20 bg-red-50" data-aos="fade-up" data-aos-delay="100">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h3
-            className="text-3xl font-bold mb-6"
+            className="text-3xl font-bold mb-16 mt-14"
             data-aos="fade-down"
             data-aos-delay="200"
           >
-            Register now to start managing your logistics operations in real time.
+            Are you a Driver or Sender? Get a Quote
           </h3>
-          <form className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-col gap-4 w-full max-w-md mx-auto transition-opacity duration-300"
+        >
+          {/* Full Name */}
+          <div className="text-left">
+            {formState.errors.name && <p className="text-red-600 text-sm mb-1">{formState.errors.name.message}</p>}
             <input
-              type="text"
+              {...quote('name', { required: 'Full Name is required' })}
               placeholder="Full Name"
-              className="border px-4 py-2 rounded"
-              data-aos="fade-right"
-              data-aos-delay="300"
+              className="border px-4 py-2 rounded w-full border-green-300"
             />
+          </div>
+
+          {/* Email */}
+          <div className="text-left">
+            {formState.errors.email && <p className="text-red-600 text-sm mb-1">{formState.errors.email.message}</p>}
             <input
-              type="email"
+              {...quote('email', {
+                required: 'Email is required',
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: 'Invalid email address',
+                },
+              })}
               placeholder="Email"
-              className="border px-4 py-2 rounded"
-              data-aos="fade-left"
-              data-aos-delay="300"
+              className="border px-4 py-2 rounded w-full border-green-300"
             />
-            <select
-              className="border px-4 py-2 rounded"
-              data-aos="fade-right"
-              data-aos-delay="400"
-            >
-              <option>Business Type</option>
-              <option>Retail</option>
-              <option>Wholesale</option>
-              <option>Courier</option>
-            </select>
-            <input
-              type="text"
-              placeholder="Message"
-              className="border px-4 py-2 rounded"
-              data-aos="fade-left"
-              data-aos-delay="400"
-            />
-          </form>
-          <Link
-            to="/register"
-            className="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700 transition-colors"
-            data-aos="zoom-in"
-            data-aos-delay="500"
+          </div>
+
+          {/* Submit */}
+          <button
+            type="submit"
+            disabled={formState.isSubmitting}
+            className={`bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700 transition-all ${
+              formState.isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
           >
-            Submit
+            {formState.isSubmitting ? 'Submitting...' : 'Submit'}
+          </button>
+        </form>
+
+        <p className="mt-4 text-sm" data-aos="fade-up" data-aos-delay="600">
+         I want to have an account?{' '}
+          <Link to="/register" className="text-red-600 hover:underline">
+            Register here
           </Link>
+        </p>
         </div>
       </section>
+
 
       {/* Team */}
       <section className="py-16 bg-gray-100" data-aos="fade-up" data-aos-delay="100">

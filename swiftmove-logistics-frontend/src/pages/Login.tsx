@@ -134,6 +134,14 @@ export default function Login() {
             {isSubmitting ? 'Logging in...' : 'Login'}
           </button>
         </form>
+
+        <p className="mt-4 text-sm" data-aos="fade-up" data-aos-delay="600">
+          I don't have an account?{' '}
+          <Link to="/register" className="text-red-600 hover:underline">
+            Register here
+          </Link>
+        </p>
+
       </div>
     </section>
   );
