@@ -2,7 +2,6 @@
 
 **SwiftMove Logistics** is a full-stack logistics management platform that empowers businesses with real-time delivery tracking, secure user authentication, role-based dashboards, and a beautiful, responsive admin panel.
 
-Live App: https://swiftmove-logistics.vercel.app   
 GitHub: https://github.com/Tybravo/swiftmove-logistics
 
 ---
