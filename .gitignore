@@ -1,0 +1,18 @@
+# Ignore dependencies
+node_modules/
+
+# Ignore environment variables
+.env
+
+# Ignore logs
+*.log
+
+# Ignore build artifacts
+dist/
+build/
+
+#Prevent this folder from been added to dev-backend branch
+#swiftmove-logistics-frontend/
+
+#Prevent this folder from been added to dev-frontend branch
+swiftmove-logistics-backend/
